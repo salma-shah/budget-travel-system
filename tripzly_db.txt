@@ -1,0 +1,836 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jul 10, 2025 at 12:53 PM
+-- Server version: 9.1.0
+-- PHP Version: 8.3.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `triptestdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `amenity`
+--
+
+DROP TABLE IF EXISTS `amenity`;
+CREATE TABLE IF NOT EXISTS `amenity` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `amenity`
+--
+
+INSERT INTO `amenity` (`id`, `name`) VALUES
+(4, 'Air Conditioning'),
+(8, 'Bar'),
+(10, 'Bed & Breakfast '),
+(5, 'Gym'),
+(3, 'Parking'),
+(7, 'Restaurant'),
+(6, 'Spa'),
+(2, 'Swimming Pool'),
+(1, 'WiFi');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking`
+--
+
+DROP TABLE IF EXISTS `booking`;
+CREATE TABLE IF NOT EXISTS `booking` (
+  `booking_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `bookable_id` int NOT NULL,
+  `bookable_type` enum('room','tour') NOT NULL,
+  `num_of_adults` int NOT NULL DEFAULT '1',
+  `num_of_children` int DEFAULT '0',
+  `total_cost` decimal(10,2) NOT NULL,
+  `booking_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `booking_start` date DEFAULT NULL,
+  `booking_end` date DEFAULT NULL,
+  `status` enum('Pending','Confirmed','Cancelled','Completed') DEFAULT 'Pending',
+  `payment_status` enum('Pending','Paid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Pending',
+  PRIMARY KEY (`booking_id`),
+  KEY `user_id` (`user_id`),
+  KEY `bookable_id` (`bookable_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`booking_id`, `user_id`, `bookable_id`, `bookable_type`, `num_of_adults`, `num_of_children`, `total_cost`, `booking_date`, `booking_start`, `booking_end`, `status`, `payment_status`) VALUES
+(14, 18, 12, 'room', 3, 1, 14666.00, '2025-06-15 17:39:06', '2025-06-24', '2025-06-26', 'Confirmed', 'Pending'),
+(17, 18, 1, 'room', 3, 0, 56000.00, '2025-06-15 17:47:16', '2025-06-26', '2025-07-10', 'Confirmed', 'Pending'),
+(18, 18, 12, 'room', 1, 0, 14666.00, '2025-06-15 17:48:38', '2025-06-25', '2025-06-27', 'Confirmed', 'Pending'),
+(19, 18, 12, 'room', 2, 0, 65997.00, '2025-06-15 17:49:41', '2025-06-18', '2025-06-27', 'Confirmed', 'Pending'),
+(20, 18, 1, 'room', 2, 0, 3666.50, '2025-06-15 17:54:13', '2025-06-16', '2025-06-17', 'Pending', 'Pending'),
+(21, 18, 2, 'room', 2, 0, 3666.50, '2025-06-15 17:54:13', '2025-06-16', '2025-06-17', 'Pending', 'Pending'),
+(22, 18, 1, 'room', 2, 3, 29332.00, '2025-06-15 17:55:19', '2025-06-17', '2025-06-25', 'Pending', 'Pending'),
+(23, 18, 2, 'room', 2, 3, 29332.00, '2025-06-15 17:55:19', '2025-06-17', '2025-06-25', 'Pending', 'Pending'),
+(24, 18, 1, 'room', 2, 0, 4000.00, '2025-06-15 17:56:30', '2025-06-23', '2025-06-24', 'Pending', 'Pending'),
+(25, 18, 1, 'room', 2, 0, 32000.00, '2025-06-15 17:58:47', '2025-06-24', '2025-07-02', 'Pending', 'Pending'),
+(26, 18, 1, 'room', 3, 0, 7333.00, '2025-06-15 18:17:44', '2025-07-10', '2025-07-12', 'Pending', 'Pending'),
+(27, 18, 2, 'room', 3, 0, 7333.00, '2025-06-15 18:17:44', '2025-07-10', '2025-07-12', 'Pending', 'Pending'),
+(28, 18, 1, 'room', 2, 0, 4000.00, '2025-06-16 11:54:48', '2025-06-18', '2025-06-19', 'Pending', 'Pending'),
+(29, 18, 0, 'room', 0, 0, 0.00, '2025-06-16 16:44:30', '2025-06-16', '2025-06-16', 'Pending', 'Pending'),
+(30, 28, 1, 'room', 2, 1, 8000.00, '2025-07-07 13:51:24', '2025-07-08', '2025-07-10', 'Pending', 'Pending'),
+(31, 28, 2, 'room', 1, 0, 3333.00, '2025-07-08 19:00:08', '2025-07-09', '2025-07-10', 'Pending', 'Pending'),
+(32, 28, 3, 'room', 1, 0, 500000.00, '2025-07-09 09:16:22', '2025-07-11', '2025-07-12', 'Pending', 'Pending'),
+(33, 29, 3, 'room', 1, 0, 500000.00, '2025-07-09 09:21:41', '2025-07-11', '2025-07-12', 'Confirmed', 'Paid'),
+(34, 29, 9, 'room', 1, 0, 20000.00, '2025-07-09 20:51:30', '2025-07-11', '2025-07-12', 'Pending', 'Pending'),
+(35, 29, 9, 'room', 1, 0, 20000.00, '2025-07-09 20:53:37', '2025-07-11', '2025-07-12', 'Confirmed', 'Paid'),
+(36, 28, 1, 'tour', 1, 0, 45000.00, '2025-07-10 09:29:02', '2025-07-11', '2025-07-11', 'Pending', 'Pending'),
+(37, 29, 1, 'tour', 1, 0, 45000.00, '2025-07-10 09:31:18', '2025-07-11', '2025-07-11', 'Confirmed', 'Paid');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_form`
+--
+
+DROP TABLE IF EXISTS `contact_form`;
+CREATE TABLE IF NOT EXISTS `contact_form` (
+  `form_id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `subject` varchar(250) NOT NULL,
+  `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`form_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `contact_form`
+--
+
+INSERT INTO `contact_form` (`form_id`, `email`, `name`, `subject`, `submitted_at`) VALUES
+(2, 'thirunihewage5@gmail.com', 'Thiruni Hewage', 'jsssssssssssssssssss', '2025-07-07 10:59:29'),
+(3, 'thiruniahinsa03@gmail.com', 'Thiruni Hewage', 'Can i know more details', '2025-07-10 09:12:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cuisine`
+--
+
+DROP TABLE IF EXISTS `cuisine`;
+CREATE TABLE IF NOT EXISTS `cuisine` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `cuisine`
+--
+
+INSERT INTO `cuisine` (`id`, `name`) VALUES
+(8, 'American'),
+(2, 'Chinese'),
+(9, 'French'),
+(4, 'Indian'),
+(1, 'Italian'),
+(7, 'Japanese'),
+(11, 'Korean'),
+(10, 'Mediterranean'),
+(5, 'Mexican'),
+(3, 'Sri Lankan'),
+(6, 'Thai');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination`
+--
+
+DROP TABLE IF EXISTS `destination`;
+CREATE TABLE IF NOT EXISTS `destination` (
+  `destination_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `location` varchar(100) NOT NULL,
+  `budget` double DEFAULT NULL,
+  `weather` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `destination`
+--
+
+INSERT INTO `destination` (`destination_id`, `name`, `location`, `budget`, `weather`) VALUES
+(1, 'Mirissa', 'kefkf2', 23999, 'Rainy'),
+(2, 'Galle', 'mmtet', 20000, 'Sunny'),
+(3, 'Ahangama', 'Sri lanka', 40000, 'Sunny'),
+(4, 'Nuwara Eliya', 'Sri Lanka', 16000, 'Sunny'),
+(5, 'Kandy', 'SRRRRR', 40000, 'Sunny'),
+(7, 'Sigiriya', 'Sri Lanka', 20000, 'Sunny'),
+(8, 'Ella', 'Sri Lanka', 20000, 'Sunny');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dietary_restriction`
+--
+
+DROP TABLE IF EXISTS `dietary_restriction`;
+CREATE TABLE IF NOT EXISTS `dietary_restriction` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dietary_restriction`
+--
+
+INSERT INTO `dietary_restriction` (`id`, `name`) VALUES
+(10, 'Diabetic-Friendly'),
+(3, 'Gluten-Free'),
+(4, 'Halal'),
+(5, 'Kosher'),
+(7, 'Lactose-Free'),
+(8, 'Low-Carb'),
+(6, 'Nut-Free'),
+(9, 'Pescatarian'),
+(2, 'Vegan'),
+(1, 'Vegetarian');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favouritable`
+--
+
+DROP TABLE IF EXISTS `favouritable`;
+CREATE TABLE IF NOT EXISTS `favouritable` (
+  `favouritable_id` int NOT NULL,
+  `favouritable_type` varchar(50) NOT NULL,
+  PRIMARY KEY (`favouritable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favourite`
+--
+
+DROP TABLE IF EXISTS `favourite`;
+CREATE TABLE IF NOT EXISTS `favourite` (
+  `favourite_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `favouritable_id` int NOT NULL,
+  PRIMARY KEY (`favourite_id`),
+  KEY `user_id` (`user_id`),
+  KEY `favouritable_id` (`favouritable_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `food_type`
+--
+
+DROP TABLE IF EXISTS `food_type`;
+CREATE TABLE IF NOT EXISTS `food_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `food_type`
+--
+
+INSERT INTO `food_type` (`id`, `name`) VALUES
+(1, 'Bar'),
+(2, 'Breakfast'),
+(3, 'Brunch'),
+(4, 'Dinnner'),
+(6, 'Lunch'),
+(5, 'Wine & Dine');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `image`
+--
+
+DROP TABLE IF EXISTS `image`;
+CREATE TABLE IF NOT EXISTS `image` (
+  `image_id` int NOT NULL AUTO_INCREMENT,
+  `file_path` varchar(255) NOT NULL,
+  `alt_text` varchar(255) DEFAULT NULL,
+  `imageable_id` int DEFAULT NULL,
+  `imageable_type` enum('stay','tour','room','restaurant','destination','attraction') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `uploaded_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`image_id`),
+  KEY `index_imageable` (`imageable_id`,`imageable_type`)
+) ENGINE=MyISAM AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `image`
+--
+
+INSERT INTO `image` (`image_id`, `file_path`, `alt_text`, `imageable_id`, `imageable_type`, `uploaded_at`) VALUES
+(1, 'images/Mirissa.jpeg', 'Mirissa Beach', 1, 'destination', '2025-06-13 18:59:31'),
+(2, 'images/Gallefort.jpeg', 'Gallefort', 2, 'destination', '2025-06-13 19:07:56'),
+(22, 'images/Ahangama.jpeg', 'Ahangama', 3, 'destination', '2025-07-08 16:00:27'),
+(4, 'images/img1.jpeg', 'Stay 1', 5, 'stay', '2025-06-13 22:45:08'),
+(5, 'images/img2.jpeg', 'dkmg', 6, 'stay', '2025-06-13 23:18:04'),
+(25, 'images/rest_686cfc7780bb76.56763652.jpeg', 'Res3.jpeg', 6, 'restaurant', '2025-07-08 16:39:43'),
+(205, 'images/adventure_thrill.jpeg', 'tour6', 6, 'tour', '2025-07-08 22:11:08'),
+(11, 'images/img7.jpeg', 'fvfv', 2, 'stay', '2025-06-15 12:17:26'),
+(100, 'images/Sigiriyarockfortress.jpeg', 'Sigiriya rock fortress', 100, 'attraction', '2025-07-08 17:05:29'),
+(13, 'images/stay_686ba5e6cfc334.75092982.jpeg', 'download.jpeg', 7, 'stay', '2025-07-07 16:18:06'),
+(24, 'images/rest_686cfb0278d1b5.94506705.jpeg', 'Res2.jpeg', 5, 'restaurant', '2025-07-08 16:33:30'),
+(15, 'images/stay_686bd4ae18c524.48234754.jpeg', 'img1.jpeg', 1, 'stay', '2025-07-07 19:37:42'),
+(19, 'images/Ella.jpeg', 'Ella', 8, 'destination', '2025-07-08 15:55:23'),
+(200, 'images/heritage.jpeg', 'tour package 1', 1, 'tour', '2025-07-08 13:54:43'),
+(18, 'images/Kandy.jpeg', 'KANDY', 5, 'destination', '2025-07-08 14:41:54'),
+(21, 'images/Sigiriya.jpeg', 'Sigiriya', 7, 'destination', '2025-07-08 16:05:09'),
+(20, 'images/NuwaraEliya.jpeg', 'NuwaraEliya', 4, 'destination', '2025-07-08 15:45:51'),
+(23, 'images/res1.jpeg', 'Res1.jpeg', 1, 'restaurant', '2025-07-08 16:24:53'),
+(26, 'images/rest_686cfccf861266.12978680.jpeg', 'Res4.jpeg', 7, 'restaurant', '2025-07-08 16:41:11'),
+(27, 'images/rest_686cfd8b1853c2.93832685.jpeg', 'Res5.jpeg', 8, 'restaurant', '2025-07-08 16:44:19'),
+(28, 'images/rest_686cfde9b5e661.51021879.jpeg', 'Res6.jpeg', 9, 'restaurant', '2025-07-08 16:45:53'),
+(29, 'images/rest_686cfe2e46b1d0.81646354.jpeg', 'Res7.jpeg', 10, 'restaurant', '2025-07-08 16:47:02'),
+(201, 'images/beach.jpeg', 'tour package 2', 2, 'tour', '2025-07-08 18:33:15'),
+(202, 'images/highlands.jpeg', 'tour package 3', 3, 'tour', '2025-07-08 18:41:27'),
+(203, 'images/family_fun.jpeg', 'tour package 5', 5, 'tour', '2025-07-08 19:01:07'),
+(204, 'images/luxury_escape.jpeg', 'tour package 4', 4, 'tour', '2025-07-08 19:05:16'),
+(206, 'images/cultural_discovery.jpeg', 'tour package 7', 7, 'tour', '2025-07-08 21:35:36'),
+(207, 'images/beach_relaxation.jpeg', 'tour package', 7, 'tour', '2025-07-08 21:36:30'),
+(101, 'images/DambullaCaveTemple.jpeg', 'attr 2', 101, 'attraction', '2025-07-08 22:16:29'),
+(103, 'images/Anuradhapura.jpeg', 'attr 3', 103, 'attraction', '2025-07-08 22:20:06'),
+(104, 'images/Polonnaruwa.jpeg', 'attr4', 104, 'attraction', '2025-07-08 22:31:25'),
+(105, 'images/YalaNationalPark.jpeg', 'attr5', 105, 'attraction', '2025-07-08 22:34:13'),
+(106, 'images/Gallefort.jpeg', 'attr 6', 106, 'attraction', '2025-07-08 22:37:45'),
+(107, 'images/Adam\'s Peak.jpeg', 'attr7', 107, 'attraction', '2025-07-08 22:41:30'),
+(108, 'images/Mihintale.jpeg', 'attr8', 108, 'attraction', '2025-07-08 22:45:35'),
+(109, 'images/Knuckle\'sMountain.jpeg', 'attr9', 109, 'attraction', '2025-07-08 23:18:26'),
+(208, 'images/stay_686d5ae9964021.61651538.jpeg', 'img2.jpeg', 10, 'stay', '2025-07-08 23:22:41'),
+(209, 'images/stay_686d6a7314fc87.66525692.jpeg', 'img3.jpeg', 11, 'stay', '2025-07-09 00:28:59'),
+(210, 'images/stay_686d6b78cf30d6.00296814.jpeg', 'img4.jpeg', 12, 'stay', '2025-07-09 00:33:20'),
+(211, 'images/stay_686d6c33274218.15189301.jpeg', 'img5.jpeg', 13, 'stay', '2025-07-09 00:36:27'),
+(212, 'images/stay_686d6ce057a993.62256434.jpeg', 'img7.jpeg', 14, 'stay', '2025-07-09 00:39:20'),
+(213, 'images/stay_686d6d5011b870.81087065.jpeg', 'img6.jpeg', 15, 'stay', '2025-07-09 00:41:12'),
+(214, 'images/stay_686d6e05bc9b78.17617040.jpeg', 'img8.jpeg', 16, 'stay', '2025-07-09 00:44:13'),
+(215, 'images/stay_686f44a290d1b2.10420593.jpeg', 'img9.jpeg', 17, 'stay', '2025-07-10 10:12:10'),
+(216, 'images/rest_686f5d13d74735.62882584.jpeg', 'Res8.jpeg', 11, 'restaurant', '2025-07-10 11:56:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `listings`
+--
+
+DROP TABLE IF EXISTS `listings`;
+CREATE TABLE IF NOT EXISTS `listings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `business_id` int NOT NULL,
+  `listable_id` int NOT NULL,
+  `listable_type` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `business_id` (`business_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `listings`
+--
+
+INSERT INTO `listings` (`id`, `business_id`, `listable_id`, `listable_type`) VALUES
+(1, 23, 5, 'stay'),
+(7, 28, 5, 'restaurant'),
+(6, 28, 4, 'restaurant'),
+(8, 28, 6, 'restaurant'),
+(9, 28, 7, 'restaurant'),
+(10, 28, 8, 'restaurant'),
+(11, 28, 9, 'restaurant'),
+(12, 28, 10, 'restaurant'),
+(13, 28, 10, 'stay'),
+(14, 28, 11, 'stay'),
+(16, 28, 13, 'stay'),
+(17, 28, 14, 'stay'),
+(18, 28, 15, 'stay'),
+(19, 28, 16, 'stay'),
+(20, 30, 17, 'stay'),
+(21, 30, 11, 'restaurant');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE IF NOT EXISTS `payment` (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `booking_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` enum('pending','paid') DEFAULT 'pending',
+  `method` varchar(50) DEFAULT NULL,
+  `payment_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`payment_id`),
+  KEY `booking_id` (`booking_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `booking_id`, `user_id`, `amount`, `status`, `method`, `payment_date`) VALUES
+(1, 33, 0, 500000.00, 'paid', 'visa', '2025-07-10 02:38:57'),
+(2, 33, 0, 500000.00, 'paid', 'visa', '2025-07-10 02:48:28'),
+(3, 33, 0, 500000.00, 'paid', 'visa', '2025-07-10 02:48:57'),
+(4, 35, 0, 20000.00, 'paid', 'visa', '2025-07-10 10:58:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reference_link`
+--
+
+DROP TABLE IF EXISTS `reference_link`;
+CREATE TABLE IF NOT EXISTS `reference_link` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `url` text NOT NULL,
+  `linkable_id` int NOT NULL,
+  `linkable_type` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `linkable_id` (`linkable_id`,`linkable_type`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `reference_link`
+--
+
+INSERT INTO `reference_link` (`id`, `title`, `url`, `linkable_id`, `linkable_type`) VALUES
+(1, 'Dambulla Cave Temples - Main Article', 'https://en.wikipedia.org/wiki/Dambulla_cave_temple', 9, 'attraction'),
+(2, 'History of Dambulla', 'https://en.wikipedia.org/wiki/History_of_Dambulla', 9, 'attraction'),
+(3, 'Architecture & Art', 'https://en.wikipedia.org/wiki/Sri_Lankan_architecture', 9, 'attraction'),
+(4, 'Galle Fort Info', 'https://en.wikipedia.org/wiki/Galle_Fort', 5, 'stay');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservation`
+--
+
+DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE IF NOT EXISTS `reservation` (
+  `reservation_id` int NOT NULL AUTO_INCREMENT,
+  `restaurant_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `number_guests` int NOT NULL,
+  `status` enum('Pending','Confirmed','Cancelled') NOT NULL,
+  PRIMARY KEY (`reservation_id`),
+  KEY `user_id` (`user_id`),
+  KEY `restaurant_id` (`restaurant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`reservation_id`, `restaurant_id`, `user_id`, `date`, `number_guests`, `status`) VALUES
+(2, 2, 18, '2025-06-18 00:00:00', 2, 'Pending'),
+(3, 2, 18, '2025-06-18 00:00:00', 2, 'Pending'),
+(4, 2, 18, '2025-06-18 00:00:00', 2, 'Pending'),
+(5, 2, 18, '2025-06-17 13:34:00', 3, 'Pending'),
+(6, 2, 18, '2025-07-03 14:35:00', 3, 'Pending'),
+(7, 2, 18, '2025-06-18 15:38:00', 3, 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaurant`
+--
+
+DROP TABLE IF EXISTS `restaurant`;
+CREATE TABLE IF NOT EXISTS `restaurant` (
+  `restaurant_id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `contacts` varchar(255) DEFAULT NULL,
+  `availability` tinyint(1) DEFAULT NULL,
+  `avg_rating` decimal(2,1) DEFAULT '0.0',
+  `status` enum('Pending','Approved','Rejected','') NOT NULL,
+  `business_id` int NOT NULL,
+  `open_from` time NOT NULL,
+  `open_to` time NOT NULL,
+  PRIMARY KEY (`restaurant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `restaurant`
+--
+
+INSERT INTO `restaurant` (`restaurant_id`, `destination_id`, `name`, `address`, `description`, `contacts`, `availability`, `avg_rating`, `status`, `business_id`, `open_from`, `open_to`) VALUES
+(1, 1, 'Cafe on 7th', 'No. 7, Beach Road, Weligama, Southern Province', 'Nestled near the sunny beaches of Weligama, Cafe on 7th is a laid-back coastal caf&eacute; known for its boho-style d&eacute;cor and refreshing tropical menu. From smoothie bowls to iced lattes and avocado toast, it&rsquo;s the perfect spot for surfers and travelers seeking health-conscious meals in a chill atmosphere.', 'cafeon7th@mirissacafes.lk | +94 77 123 4567', 1, 0.0, 'Approved', 28, '10:00:00', '22:00:00'),
+(5, 2, 'The Gallery Cafe', '2 Alfred House Road, Colombo 03', 'Once the office of legendary architect Geoffrey Bawa, The Gallery Caf&eacute; is a sophisticated fine-dining venue combining art, architecture, and exceptional cuisine. Located in Colombo, it features contemporary Sri Lankan and international fusion dishes served in an elegant open-air courtyard with regularly changing art exhibitions.', 'info@gallerycafesl.com | +94 11 258 2162', 1, 0.0, 'Approved', 28, '10:00:00', '22:00:00'),
+(6, 3, 'Ministry of Crab', 'Dutch Hospital, Fort, Colombo 01', 'Located in the iconic Dutch Hospital Precinct, Ministry of Crab is a globally recognized seafood destination dedicated to celebrating Sri Lanka&rsquo;s famous lagoon crabs. Co-founded by renowned Sri Lankan cricketers, the restaurant delivers a luxury culinary experience rooted in freshness, flavor, and fiery island spices.', 'reservations@ministryofcrab.com | +94 11 234 2722', 1, 0.0, 'Approved', 28, '10:00:00', '22:00:00'),
+(7, 5, 'Upali', '65 C.W.W. Kannangara Mawatha', 'Upali&rsquo;s by Nawaloka offers a truly authentic Sri Lankan dining experience in the heart of Colombo. Renowned for its extensive range of island classics, this family-friendly restaurant serves up traditional rice &amp; curry, hoppers, and regional favorites in a welcoming, casual setting.', 'upalisrestaurant@gmail.com | +94 11 269 9071', 1, 0.0, 'Approved', 28, '10:00:00', '10:00:00'),
+(8, 2, 'Cafe Halo', '24 Lighthouse Street, Galle Fort, Galle', 'Tucked inside the historic Galle Fort, Cafe Halo is a popular rooftop eatery offering panoramic sunset views and a trendy ambiance. The menu features hearty breakfasts, artisanal coffee, and seasonal cocktails. Ideal for both digital nomads and casual tourists.', 'hello@cafehalo.lk | +94 76 456 7890', 1, 0.0, 'Approved', 28, '10:00:00', '22:00:00'),
+(9, 5, 'Aromatic Spice', '21 Sangaraja Mawatha, Kandy', 'A hidden gem in the heart of Kandy, Aromatic Spice offers a flavorful journey through Sri Lankan and Indian cuisine. With a focus on fresh spices, clay pot cooking, and vegetarian options, it&rsquo;s perfect for those seeking bold taste in a cozy, traditional ambiance.', 'contact@aromaticspice.lk | +94 81 222 8883', 1, 0.0, 'Approved', 28, '10:00:00', '22:00:00'),
+(10, 5, 'Nourish Me Cafe', '45 Lewis Place, Negombo', 'Nourish Me Caf&eacute; in Negombo is a wellness-focused eatery offering organic meals, detox juices, and plant-based desserts. It&rsquo;s a serene oasis for mindful eaters, travelers with dietary needs, and yoga enthusiasts looking to refuel in a peaceful setting near the beach.', 'nourishme@negombocafe.lk | +94 77 889 6655', 1, 0.0, 'Approved', 28, '10:00:00', '22:00:00'),
+(11, 2, 'The Coconut Grove Bistro', '45 Lighthouse Street, Galle 80000, Sri Lanka', 'Nestled just outside the historic Galle Fort, The Coconut Grove Bistro blends colonial charm with tropical vibes. This laid-back yet elegant restaurant offers a curated fusion of Sri Lankan and Mediterranean cuisine, crafted using locally sourced, organic ingredients. Guests can enjoy open-air dining under swaying coconut trees while sipping on fresh king coconut mocktails or handcrafted cocktails.\r\n\r\nPopular among both tourists and locals, it&rsquo;s perfect for brunches, romantic dinners, or evening chillouts with live music and lantern-lit ambience.', 'reservations@coconutgrovegalle.com | +94 91 224 7890', 1, 0.0, 'Approved', 30, '10:00:00', '23:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaurant_cuisine`
+--
+
+DROP TABLE IF EXISTS `restaurant_cuisine`;
+CREATE TABLE IF NOT EXISTS `restaurant_cuisine` (
+  `restaurant_id` int NOT NULL,
+  `id` int NOT NULL,
+  PRIMARY KEY (`restaurant_id`,`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaurant_dietary_restriction`
+--
+
+DROP TABLE IF EXISTS `restaurant_dietary_restriction`;
+CREATE TABLE IF NOT EXISTS `restaurant_dietary_restriction` (
+  `restaurant_id` int NOT NULL,
+  `id` int NOT NULL,
+  PRIMARY KEY (`restaurant_id`,`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaurant_food_type`
+--
+
+DROP TABLE IF EXISTS `restaurant_food_type`;
+CREATE TABLE IF NOT EXISTS `restaurant_food_type` (
+  `restaurant_id` int NOT NULL,
+  `id` int NOT NULL,
+  PRIMARY KEY (`restaurant_id`,`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review`
+--
+
+DROP TABLE IF EXISTS `review`;
+CREATE TABLE IF NOT EXISTS `review` (
+  `review_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `reviewable_id` int NOT NULL,
+  `reviewable_type` enum('stay','review','attraction','tour','restaurant') NOT NULL,
+  `rating` int NOT NULL,
+  `comment` text,
+  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`review_id`),
+  KEY `user_id` (`user_id`),
+  KEY `reviewable_id` (`reviewable_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`review_id`, `user_id`, `reviewable_id`, `reviewable_type`, `rating`, `comment`, `date`) VALUES
+(18, 18, 5, 'stay', 1, 'hrrrorible', '2025-06-16 16:59:32'),
+(19, 18, 5, 'stay', 3, 'whas your name', '2025-06-16 17:23:28'),
+(20, 29, 1, 'stay', 5, 'love the stay', '2025-07-10 14:01:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room`
+--
+
+DROP TABLE IF EXISTS `room`;
+CREATE TABLE IF NOT EXISTS `room` (
+  `room_id` int NOT NULL AUTO_INCREMENT,
+  `stay_id` int NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `type` enum('single','double','family','suite') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `price_per_night` decimal(10,2) NOT NULL,
+  `description` text,
+  `status` enum('Available','Unavailable') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`room_id`),
+  KEY `stay_id` (`stay_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`room_id`, `stay_id`, `name`, `type`, `price_per_night`, `description`, `status`) VALUES
+(1, 5, 'DEl', 'suite', 4000.00, 'fbggg', 'Available'),
+(2, 5, 'fgfgrg', 'single', 3333.00, 'gbgb', 'Available'),
+(3, 7, 'Deluxe room', 'family', 500000.00, 'yhjrsry', 'Available'),
+(4, 10, 'Standard Double Room', 'double', 7000.00, 'Wooden interior, ensuite bathroom, mountain view, tea/coffee station', 'Available'),
+(5, 11, 'Sea View Deluxe', 'double', 9500.00, 'King-size bed, full-length windows, modern décor, sea-view balcony', 'Available'),
+(6, 12, 'Treehouse Dorm', 'suite', 15000.00, 'Elevated bunks, jungle view, open-air showers', 'Available'),
+(7, 12, 'Private Eco Room', 'single', 5000.00, 'Natural wood design, garden-facing, solar lighting', 'Available'),
+(8, 13, 'Riverside Room', 'double', 16000.00, 'Full river view, balcony, ensuite bathroom, rustic vibe', 'Available'),
+(9, 13, 'Family Lodge', 'family', 20000.00, 'Two double beds, extra mattress, kitchen area', 'Available'),
+(10, 14, 'Cozy Queen Room', 'double', 7000.00, 'floral decor, garden view', 'Available'),
+(11, 14, 'Garden Suite', 'suite', 20000.00, 'Private entrance, lounge, mini-kitchen', 'Available'),
+(12, 15, 'Budget Twin Room', 'double', 3900.00, 'Simple fan-cooled room with clean beds', 'Available'),
+(13, 15, 'Sunset View Room', 'double', 10000.00, 'Sea-facing balcony, AC, queen bed', 'Available'),
+(14, 16, 'Lake View Room', 'double', 6500.00, 'Bright room, balcony with lake view, tea facilities', 'Available'),
+(15, 16, 'Family Room', 'family', 20000.00, '2 queen beds, large windows, AC', 'Available'),
+(16, 17, 'Budget Twin Room', 'double', 5000.00, 'Simple fan-cooled room with clean beds', 'Available'),
+(17, 17, 'Sunset View Room', 'suite', 7000.00, 'Sea-facing balcony, AC, queen bed', 'Available');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stay`
+--
+
+DROP TABLE IF EXISTS `stay`;
+CREATE TABLE IF NOT EXISTS `stay` (
+  `stay_id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text,
+  `address` varchar(255) DEFAULT NULL,
+  `contacts` varchar(255) DEFAULT NULL,
+  `avg_rating` decimal(2,1) DEFAULT NULL,
+  `free_cancellation` tinyint(1) DEFAULT NULL,
+  `property_type` enum('Hotel','Guesthouse','Hostel','Villa','Apartment') NOT NULL,
+  `status` enum('Pending','Approved','Rejected') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Pending',
+  PRIMARY KEY (`stay_id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `stay`
+--
+
+INSERT INTO `stay` (`stay_id`, `destination_id`, `name`, `description`, `address`, `contacts`, `avg_rating`, `free_cancellation`, `property_type`, `status`) VALUES
+(1, 1, 'Seaside Retreat', 'Nestled along the golden shores of Mirissa, Seaside Retreat offers travelers a budget-friendly haven with the soothing sound of ocean waves. Perfect for surfers, backpackers, and beach lovers, the hostel fosters a friendly, community-driven environment. Guests can enjoy group dinners, bonfires on the beach, and yoga sessions at sunrise.', 'No. 10, Beach Road, Mirissa, Matara', 'seaside@tripzly.lk | +94 77 123 4567', 5.0, 0, 'Hotel', 'Approved'),
+(10, 4, 'Hillcrest Hotel', 'Set amidst the misty hills of Nuwara Eliya, Hillcrest Hotel captures colonial elegance and modern luxury. With wood-paneled interiors, highland gardens, and cozy fireplaces;and is ideal for couples and families seeking relaxation. Guests enjoy high tea on the lawn, horse riding, and boat rides on Gregory Lake.', 'No. 45, Gregory&rsquo;s Lane, Nuwara Eliya', 'hillcrest@tripzly.lk | +94 71 234 5678', NULL, 0, 'Guesthouse', 'Approved'),
+(11, 2, 'Coral Bay Hotel', 'Located on the sunny shores of Galle, Coral Bay is a luxurious seaside hotel with stunning sunset views, ideal for romantic getaways and family vacations.', 'No. 23, Beach Road, Galle', 'coralbay@tripzly.lk | +94 77 567 8912', NULL, 0, 'Hotel', 'Approved'),
+(13, 3, 'Riverbank Guest House', 'Just a short ride from the beach, this tropical guest house is perched by a peaceful riverbank with lush garden views. Great for relaxation or short surf trips.', 'Station Road, Ahangama', 'riverbank@tripzly.lk | +94 72 998 8765', NULL, 0, 'Guesthouse', 'Approved'),
+(14, 4, 'Mountainview Cottage', 'Quaint hill-country cottage surrounded by misty tea hills and flowering gardens. Ideal for couples and nature photographers.', 'No. 12, Upper Road, Nuwara Eliya', 'mountainview@tripzly.lk | +94 71 456 1234', NULL, 0, 'Villa', 'Approved'),
+(15, 3, 'Sunset Guest House', 'Budget-friendly guest house with rooftop sea views and easy beach access. Great for surfers and solo travelers.', 'Beach Road, Ahangama', 'sunsetgh@tripzly.lk | +94 70 654 7890', NULL, 0, 'Guesthouse', 'Pending'),
+(16, 5, 'Hilltop Guest House', 'Perched above the city, this homely guest house offers sweeping views of Kandy Lake. Hosts provide homemade meals and cultural tips.', 'No. 34, Upper Lake Drive, Kandy', 'hilltop@tripzly.lk | +94 76 543 2190', NULL, 0, 'Guesthouse', 'Approved'),
+(17, 3, 'Sunset Guest House', 'Budget-friendly guest house with rooftop sea views and easy beach access. Great for surfers and solo travelers.', 'Beach Road, Ahangama', 'sunsetgh@tripzly.lk | +94 70 654 7890', NULL, 0, 'Guesthouse', 'Approved');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stay_amenity`
+--
+
+DROP TABLE IF EXISTS `stay_amenity`;
+CREATE TABLE IF NOT EXISTS `stay_amenity` (
+  `stay_id` int NOT NULL,
+  `amenity_id` int NOT NULL,
+  PRIMARY KEY (`stay_id`,`amenity_id`),
+  KEY `amenity_id` (`amenity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `stay_amenity`
+--
+
+INSERT INTO `stay_amenity` (`stay_id`, `amenity_id`) VALUES
+(5, 1),
+(9, 1),
+(11, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(17, 1),
+(5, 2),
+(9, 2),
+(10, 2),
+(13, 2),
+(5, 3),
+(9, 3),
+(11, 3),
+(13, 3),
+(14, 3),
+(17, 3),
+(7, 4),
+(9, 4),
+(10, 4),
+(11, 4),
+(12, 4),
+(13, 4),
+(14, 4),
+(15, 4),
+(16, 4),
+(17, 4),
+(7, 5),
+(12, 5),
+(13, 5),
+(10, 6),
+(11, 6),
+(13, 6),
+(9, 7),
+(13, 7),
+(7, 8),
+(12, 8),
+(13, 8),
+(7, 10),
+(9, 10),
+(10, 10),
+(11, 10),
+(12, 10),
+(13, 10),
+(14, 10),
+(17, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tour`
+--
+
+DROP TABLE IF EXISTS `tour`;
+CREATE TABLE IF NOT EXISTS `tour` (
+  `tour_id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `type` enum('Wildlife','Cultural','Staycation','') NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `included` text NOT NULL,
+  `price_per_adult` decimal(10,2) NOT NULL,
+  `duration` int NOT NULL,
+  `contacts` text NOT NULL,
+  `highlights` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `avg_rating` decimal(2,1) DEFAULT '0.0',
+  `is_available` tinyint(1) DEFAULT NULL,
+  `status` enum('Rejected','Approved','Pending','') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`tour_id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tour`
+--
+
+INSERT INTO `tour` (`tour_id`, `destination_id`, `name`, `type`, `description`, `included`, `price_per_adult`, `duration`, `contacts`, `highlights`, `avg_rating`, `is_available`, `status`) VALUES
+(1, 0, '5-day tour covering Anuradhapura, Polonnaruwa, and Kandy\'s cultural sites. ', 'Cultural', 'Discover Sri Lanka\'s rich cultural heritage on this 5-day guided tour through ancient cities, sacred temples, and colonial towns. Begin your journey in Anuradhapura, explore the ruins of Polonnaruwa, and witness the grandeur of Kandy\'s Temple of the Tooth.', '4 nights\' accommodation in 3-star hotels,\r\nPrivate air-conditioned transport,\r\nDaily breakfast,\r\nEntrance to all listed attractions,\r\nLicensed English-speaking guide\r\n\r\n', 45000.00, 5, '+94 77 123 4567 | heritage@tripzly.lk', 'Sacred Bo Tree in Anuradhapura\r\nRoyal Palace & Gal Vihara in Polonnaruwa\r\nTemple of the Tooth in Kandy\r\nCultural dance show and tea tasting', 5.0, 6, 'Approved'),
+(2, 0, '4-Night Stay in Hikkaduwa and Mirissa with Surfing and Whale Watching', 'Wildlife', 'Enjoy a sun-soaked escape on Sri Lanka\'s southern coast. This 4-night package offers the perfect blend of beach relaxation and coastal adventure in Hikkaduwa and Mirissa. Ride the waves, explore coral reefs, and witness majestic whales in their natural habitat.', 'Beachfront hotel accommodation\r\n\r\nDaily breakfast and one seafood dinner\r\n\r\nSurfboard rentals and beginner lessons\r\n\r\nWhale watching tour in Mirissa\r\n\r\nSnorkeling gear and guide\r\n\r\nRound-trip coastal transfers', 38000.00, 4, 'Contact Number: +94 76 456 7890\r\nEmail: beachbliss@tripzly.com', 'Whale watching expedition\r\n\r\nSurfing in Hikkaduwa\r\n\r\nSnorkeling over coral reefs\r\n\r\nBeach bonfire experience\r\n\r\nStunning ocean sunsets', 0.0, NULL, 'Approved'),
+(3, 0, 'Explore Nuwara Eliya and Ella with Trekking, Tea Tours, and Scenic Train Ride', '', 'This highlands adventure will take you to Sri Lanka’s coolest destinations – Nuwara Eliya and Ella. Experience misty hills, tea estates, and adrenaline-pumping hikes. A perfect escape into nature with a touch of colonial charm.', 'Accommodation with breakfast\r\n\r\nHorton Plains and Little Adam’s Peak hikes\r\n\r\nGuided tea factory tour and tasting\r\n\r\nScenic train ride from Nanu Oya to Ella\r\n\r\nAll transportation', 42000.00, 5, 'Contact Number: +94 70 111 3344\r\nEmail: highlands@tripzly.com', 'Hike to World’s End\r\n\r\nVisit to a working tea factory\r\n\r\nNine Arch Bridge photo stop\r\n\r\nElla Rock trek\r\n\r\nLake Gregory boat ride', 5.0, 10, 'Approved'),
+(4, 2, '7-Day Guided Luxury Tour Through Colombo, Bentota, and Galle', 'Wildlife', 'Indulge in an opulent 7-day private tour featuring premium experiences across Colombo, Bentota, and Galle. With luxury 5-star accommodation, fine dining, private transfers, and curated activities, this tour delivers elegance and comfort at every step.', '6 nights in 5-star hotels\r\n\r\nPrivate chauffeur with luxury vehicle\r\n\r\nSunset dinner cruise in Bentota\r\n\r\nPrivate fort tour in Galle\r\n\r\nGourmet dining experiences', 12000.00, 7, 'Contact Number: +94 76 987 6543\r\nEmail: luxury@tripzly.com', 'Colombo city shopping and spa session\r\n\r\nRiver safari in Bentota\r\n\r\nGalle Fort boutique experience\r\n\r\nBeachfront candlelight dinner\r\n\r\nPersonalized travel concierge', 5.0, 20, 'Approved'),
+(5, 2, '5-Day Guided Family Tour with Wildlife and Beach Fun in Yala, Galle, and Bentota', 'Wildlife', 'Perfect for families, this fun-filled itinerary includes wildlife safaris, beach playtime, and cultural exploration with family-friendly accommodations and expert guides tailored for kids and parents alike.', 'Family accommodation with breakfast and dinner\r\n\r\nYala National Park jeep safari\r\n\r\nBeachside activities and games\r\n\r\nCity tours with child-friendly guides\r\n\r\nAll transfers in a private van\r\n\r\n', 65000.00, 5, 'Contact Number: +94 78 432 1122\r\nEmail: familyfun@tripzly.com\r\n\r\n', 'Spotting leopards at Yala\r\n\r\nFamily beach games in Bentota\r\n\r\nVisiting Galle Fort\r\n\r\nTurtle hatchery experience\r\n\r\nKids\' cultural workshops', 5.0, 13, 'Approved'),
+(6, 4, '6-Day Tour with Hiking, Rafting, and Camping in Kitulgala, Ella, and Horton Plains', 'Wildlife', 'Adventurers will love this thrilling 6-day experience packed with hikes, river rafting, and eco-camping. Discover Sri Lanka’s wild side with expert tour leaders in the lush regions of Kitulgala and the hill country.', 'Rafting gear and expert guides\r\n\r\nOvernight camping with meals\r\n\r\nHiking permits and park entry\r\n\r\nAccommodation in eco lodges\r\n\r\nAll transfers and equipment', 75000.00, 6, 'Contact Number: +94 77 555 0192\r\nEmail: adventure@tripzly.com', 'White-water rafting in Kitulgala\r\n\r\nCamping in nature reserves\r\n\r\nElla Rock trekking adventure\r\n\r\nVisit to Horton Plains\r\n\r\nBonfire dinners', 5.0, 60, 'Approved');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tourist_attraction`
+--
+
+DROP TABLE IF EXISTS `tourist_attraction`;
+CREATE TABLE IF NOT EXISTS `tourist_attraction` (
+  `attraction_id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `overview` text NOT NULL,
+  `highlight1` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `highlight2` text NOT NULL,
+  `highlight3` text NOT NULL,
+  `contact_number` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `visitor_exp` text NOT NULL,
+  PRIMARY KEY (`attraction_id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tourist_attraction`
+--
+
+INSERT INTO `tourist_attraction` (`attraction_id`, `destination_id`, `name`, `description`, `overview`, `highlight1`, `highlight2`, `highlight3`, `contact_number`, `visitor_exp`) VALUES
+(100, 6, 'Sigiriya Rock Fortress', 'Sigiriya, also known as Lion Rock, is a breathtaking ancient rock fortress that rises 200 meters above the surrounding jungle in central Sri Lanka. This UNESCO World Heritage Site is a testament to the ingenuity and vision of ancient Sri Lankan kings, par', 'Sigiriya features symmetrical royal gardens, water channels, and remarkable frescoes that line the rock\'s mid-level walls. Visitors ascend via stairways to the summit, where the ruins of the king\'s palace overlook vast, forested plains. Sigiriya is both a cultural icon and architectural marvel that blends nature and urban planning.', 'The Mirror Wall with 8th-century graffiti\r\n', 'Colorful frescoes of celestial maidens', 'Lion’s Paw Terrace', '+94 66 228 6142', 'A climb up Sigiriya is both thrilling and spiritual. You’ll be rewarded with unmatched views and a deeper appreciation for ancient Sri Lankan artistry and engineering. The site is best explored in the early morning or late afternoon when temperatures are cooler and the light is magical.'),
+(101, 0, 'Dambulla Cave Temple', 'Located just a short drive from Sigiriya, the Dambulla Cave Temple complex is Sri Lanka\'s largest and most preserved cave temple site. It contains over 150 stunning Buddha statues and intricate murals covering 2,100 square meters of cave walls and ceiling', 'Also known as the Golden Temple of Dambulla, this religious site dates back to the 1st century BCE and remains active today. The temple sits atop a massive rock and provides sweeping views of the countryside. It’s a sacred pilgrimage spot and a remarkable display of Buddhist devotion through art.', 'Golden Buddha statue at the entrance\r\n', 'Five uniquely themed caves', 'Over 150 statues of Buddha', '+94 66 228 3860', 'The atmosphere is serene and deeply spiritual. After a short but steep climb, visitors are welcomed by cool, dimly lit caves filled with centuries of artistry and reverence. Bring socks, as shoes must be removed, and modest clothing is required.\r\n\r\n'),
+(103, 0, 'Anuradhapura Ancient City', 'Anuradhapura is the first ancient capital of Sri Lanka and one of the oldest continuously inhabited cities in the world. This UNESCO World Heritage Site is filled with ancient temples, stupas, monasteries, and tanks, offering a window into over a millenni', 'Founded in the 4th century BCE, Anuradhapura became a great center of political and religious power. The sacred Sri Maha Bodhi tree, a cutting from the original Bodhi Tree under which the Buddha attained enlightenment, remains the spiritual heart of the city.', 'Sri Maha Bodhi – the oldest documented tree in the world\r\n', 'Ruwanwelisaya and Jetavanaramaya stupas\r\n', 'Thuparamaya – the first dagoba in Sri Lanka\r\n', '+94 25 222 2593', 'A serene journey through vast ruins that feel both timeless and sacred. Rent a bicycle or tuk-tuk to explore the expansive grounds, and allow a full day to immerse yourself in its grandeur.'),
+(104, 0, 'Polonnaruwa Ruins', 'Polonnaruwa is Sri Lanka’s medieval capital and one of its best-preserved archaeological cities. The ruins reveal a glorious past of kings, scholars, and architects who contributed to its cultural zenith between the 11th and 13th centuries.\r\n\r\n', 'Set along a vast man-made reservoir called Parakrama Samudra, the site includes royal palaces, audience halls, temples, Buddhist relic shrines, and exquisite statues carved from solid granite.', 'Gal Vihara’s four colossal Buddha statues\r\n', 'The Quadrangle with Vatadage and Hatadage\r\n', 'King Parakramabahu’s Royal Palace\r\n', '+94 27 222 2273', 'The site is tranquil and easy to navigate, especially by bicycle. Shady trees and well-kept grounds make it ideal for a peaceful walk through history, often accompanied by monkeys and peacocks.'),
+(105, 0, 'Yala National Park', 'Yala is Sri Lanka’s most famous national park, known for its exceptional leopard population, vast biodiversity, and dry zone landscapes. Covering over 900 square kilometers, Yala offers one of the best safari experiences outside of Africa.', 'The park comprises grasslands, lagoons, forests, and coastal plains. It is divided into five blocks, with Block I being the most popular for wildlife safaris. Expect to see elephants, sloth bears, crocodiles, peacocks, and more.', 'Guided jeep safaris\r\n', 'High chances of leopard sightings\r\n', 'Birdwatching and butterfly trails\r\n', '+94 47 567 7100', 'The thrill of spotting a leopard in the wild is unforgettable. Safaris start at sunrise and sunset, and experienced guides enhance the experience with insights into the flora and fauna. Be camera-ready!\r\n\r\n'),
+(106, 0, 'Galle Fort', 'Galle Fort is a beautifully preserved colonial fortress built by the Portuguese and extensively fortified by the Dutch. This UNESCO World Heritage Site is a unique blend of European architecture and South Asian culture.', 'Located along the southern coast, the fort is a living city with cobblestone streets, museums, boutique hotels, art galleries, and cafes. It’s one of the best places in Sri Lanka to enjoy history, shopping, and ocean views all in one place.', 'Galle Lighthouse', 'Dutch Reformed Church', 'Maritime Archaeology Museum', '+94 91 223 4363', 'Visitors can stroll at a leisurely pace, exploring colonial buildings and artisan shops, and relax by the sea. Great for families, couples, and history lovers alike.'),
+(107, 0, ' Adam’s Peak', 'Adam’s Peak is a sacred pilgrimage site and natural marvel that rises 2,243 meters above sea level. It’s revered in Buddhism, Hinduism, Islam, and Christianity.\r\n\r\n', 'At the summit lies a footprint-shaped impression believed to be of Buddha, Shiva, Adam, or St. Thomas depending on faith. The climb is challenging but deeply rewarding, especially during the pilgrimage season from December to May.\r\n\r\n', 'Sacred footprint shrine at the peak', 'Illuminated pilgrimage path', 'Sunrise views with cloud sea', '+94 36 492 0234', 'Climbers begin around midnight to reach the summit by sunrise. The journey is spiritual and breathtaking, with thousands of glowing lights leading the way.\r\n\r\n'),
+(108, 0, ' Mihintale', 'Mihintale is a serene hilltop sanctuary that marks the birthplace of Buddhism in Sri Lanka. It was here, in 247 BCE, that Arahat Mahinda—son of Indian Emperor Ashoka—met King Devanampiyatissa and introduced the teachings of the Buddha. Today, Mihintale st', 'Located just 13 kilometers east of Anuradhapura, Mihintale consists of a scenic network of staircases, rock formations, and religious structures. As visitors ascend the 1,840 stone steps that lead to the summit, they pass through ancient ruins, meditation caves, dagobas, and a tranquil forest backdrop. The area is dotted with white-washed stupas and statues, each telling its own story of faith and devotion.', 'Aradhana Gala – a massive rock formation where Arahat Mahinda first preached', 'Ambastala Dagoba – built on the site of the historic encounter', 'Maha Seya – an ancient stupa said to enshrine relics of the Buddha', '+94 25 223 2445', 'Mihintale offers a calm, reflective atmosphere perfect for both spiritual seekers and history enthusiasts. The climb is manageable and scenic, especially during early morning or late afternoon. The summit rewards visitors with panoramic views of the North Central plains and an overwhelming sense of serenity. It’s a place where time slows down and silence speaks volumes.'),
+(109, 0, 'Knuckles Mountain Range', 'The Knuckles Mountain Range, named for its resemblance to a clenched fist, is a mist-shrouded haven of biodiversity in central Sri Lanka. Recognized as a UNESCO World Heritage Site, this rugged mountain terrain is home to unique flora, rare fauna, and bre', 'Stretching across the districts of Kandy and Matale, the Knuckles range encompasses cloud forests, grasslands, waterfalls, and hidden villages. The region harbors over 1,100 plant species and hundreds of animal species—many of which are endemic to Sri Lanka. Trekking here reveals landscapes untouched by modern development and communities that still live in harmony with nature.', 'Mini World’s End – a sheer cliff with views over the Mahaweli Valley', 'Meemure and Duwili Ella Trails – remote treks through pristine jungle', 'River crossings and canopy forests', NULL, 'Exploring Knuckles is an immersive, often soul-stirring experience. Whether you\'re embarking on a half-day nature walk or a multi-day trek, you’ll encounter misty peaks, birdsong, rushing waterfalls, and rural simplicity. Guides are highly recommended to navigate the terrain and to unlock the deeper ecological significance of this natural treasure.\r\n\r\n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `contact_number` varchar(15) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `role` enum('User','Administrator','Business') NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `name`, `contact_number`, `email`, `role`, `password`, `address`) VALUES
+(18, 'U me', '423', 'meme@gmail.com', 'User', '$2y$10$mvxeXAW9gCB1KZIjPdF67eOCEs917lyqpsOtNuEzn353FHHzfapri', 'fbff'),
+(19, 'Luna Moon', '3425', 'lunamoon@gmail.com', 'User', '$2y$10$YfayQjVotii4IgUTA2pSQe80Az56W8tTFbqVuBxNwY39rR2mmPZyO', 'rgg'),
+(20, 'Luna Moon', '3425', 'lunamoon7@gmail.com', 'User', '$2y$10$Pkemu.vBjSKGynUaN.vKYOr34yWX4HmVvVESGscXN.4jYFfgopqoK', 'rgg'),
+(21, 'Luna Moon', '3425', 'lunamoon78@gmail.com', 'User', '$2y$10$wQgtrEFn1sUhbTj/ON0B2.VgM8JaSINvg0ec1IRoOOE7vgu7T.aGO', 'rgg'),
+(23, 'Flroal', '9029204902', 'floweriris@gmail.com', 'Business', '$2y$10$lpSy.Olep7Bnyu8INaThceh4lD7tuLdf98PI.Zlk2Ir8iwY1p9eW6', 'flow'),
+(24, 'Thiruni Hewage', '0762361145', 'thirunihewage5@gmail.com', 'User', '$2y$10$jHPc5iruEO.mb.ob0aJEyeybcvrQPEfxZSQ1PyfK/yzsqGntl8uci', 'Pepiliyana'),
+(25, 'Salma Shah', '0762361145', 'salmashah@gmail.com', 'Administrator', '$2y$10$fz2ZhVnNjqsfnvE4lVFkr.s1pRq0okn4VPRRIET2Sz8ZuU7iRJhby', 'House'),
+(26, 'Thiruni Hewage', '0762361145', 'thirunihewage55@gmail.com', 'User', '$2y$10$DwBbrngqJ4lcBOxCLRPIue2uIossEkA27lxTH9oHTis8ose2GW3NW', '66/14A,  Suriyamal Mawatha, Divulpitiya, Boralesgamuwa'),
+(27, 'Thiruni Hewage', '0762361145', 'thirunihewage555@gmail.com', 'User', '$2y$10$2KJGPZTamlyrQ7xC08YQ9.o5yKXCCLp9THVOp6nRLWK4jGfekTf9i', '66/14A,  Suriyamal Mawatha, Divulpitiya, Boralesgamuwa'),
+(28, 'blabla', '0762361145', 'blablablabla@gmail.com', 'Business', '$2y$10$c2kxiefW0SQKtkhno5pjn.q5ppEtChkLoeS88jVk5Qehf3In5C8h.', 'degheh'),
+(29, 'Thiruni Hewage', '0762361145', 'thiruniahinsa03@gmail.com', 'User', '$2y$10$Fjf5BcLGi4Tv0LkmZ0bML.SHMIf7xw08GIZ3uZDpnUwAkt..9E15C', '66/14A,  Suriyamal Mawatha, Divulpitiya, Boralesgamuwa'),
+(30, 'Prime Holdings', '0762361145', 'primeholdings@gmail.com', 'Business', '$2y$10$UoJVBbF/sijmGcK4WvSdsuf5.9BTA7lWSFUjLvtL20oYZqJLR6ojG', '230,colombo,Sri Lanka');
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
